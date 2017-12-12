@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "build": "rm -rf lib; tsc -p .",
+    "watch": "rm -rf lib; tsc --watch -p ."
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "firebase-admin": "^5.5.1",
+    "is-email": "^1.0.0",
+    "multiposs": "^0.0.3",
+    "pass-creator": "^0.0.3",
+    "pass-server": "^0.0.5",
+    "vinyl-fs": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.2",
+    "@types/express": "^4.0.39",
+    "@types/node": "^8.0.53",
+    "@types/vinyl-fs": "^2.4.8",
+    "typescript": "^2.6.2"
+  }
+}
