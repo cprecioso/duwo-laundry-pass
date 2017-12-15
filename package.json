@@ -1,8 +1,14 @@
 {
-  "name": "laundry",
+  "name": "duwo-laundry-pass",
   "version": "0.0.3",
   "private": true,
-  "main": "lib/index.js",
+  "description": "Server to create Passbook passes for DUWO's laundromats",
+  "homepage": "https://github.com/cprecioso/laundry#readme",
+  "bugs": {
+    "url": "https://github.com/cprecioso/laundry/issues"
+  },
+  "license": "MIT",
+  "author": "Carlos Precioso <kalprestito@gmail.com>",
   "files": [
     "lib",
     "passImages",
@@ -10,11 +16,19 @@
     "views",
     "tsconfig.json"
   ],
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cprecioso/laundry.git"
+  },
   "scripts": {
-    "start": "node lib/index.js",
     "build": "rm -rf lib; tsc -p .",
-    "watch": "rm -rf lib; tsc --watch -p .",
-    "deploy": "now -E .env"
+    "deploy": "now -E .env",
+    "start": "node lib/index.js",
+    "watch": "rm -rf lib; tsc --watch -p ."
   },
   "dependencies": {
     "dotenv": "^4.0.0",
