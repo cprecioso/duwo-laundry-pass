@@ -14,7 +14,7 @@
     "passImages",
     "public",
     "views",
-    "tsconfig.json"
+    "yarn.lock"
   ],
   "main": "lib/index.js",
   "directories": {
@@ -25,7 +25,7 @@
     "url": "git+https://github.com/cprecioso/laundry.git"
   },
   "scripts": {
-    "deploy": "npm run prepublish && now -E .env",
+    "deploy": "npm run prepublish && now",
     "make-public": "now alias",
     "prepublish": "rm -rf lib; tsc -p .",
     "start": "node lib/index.js",

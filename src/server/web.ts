@@ -17,10 +17,11 @@ app.use(passServerMountPath, passServer)
 app.set("views", resolve(__dirname, "../../views"))
 app.set("view engine", "pug")
 
-const temporaryPasses = new Map<string, {
+interface TemporaryPass {
   pass: Promise<Buffer>,
   url: string
-}>()
+}
+const temporaryPasses = new Map<string, TemporaryPass>()
 
 async function removePass(temporaryId: string) {
   await delay(10 * 60 * 1000)
