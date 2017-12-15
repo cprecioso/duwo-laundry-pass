@@ -13,9 +13,14 @@ html(lang='en')
   body
     script document.body.className += " js"
 
-    block content
+    .cover
+      block cover
 
-    block footer
-      .content
+    .content
+      block content
+
+      block footer
         .card: p
-          b: a(href='https://carlosprecioso.com') Contact me
+          a(href="/") Main page →
+          br
+          a(href="https://carlosprecioso.com") About me →

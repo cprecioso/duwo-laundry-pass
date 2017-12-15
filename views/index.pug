@@ -1,40 +1,39 @@
 extends layout
 
+block cover
+  h1
+    | DUWO
+    br
+    | Laundry
+    br
+    | Pass
+    br
+    | Creator
+
 block content
-  .cover
-    h1
-      | DUWO
-      br
-      | Laundry
-      br
-      | Pass
-      br
-      | Creator
+  form(method='POST' action="/createPass")
+    label
+      p Email
+      p.note Not used to send you messages
+      p: input(type='email' name='username' required='')
+    label
+      p Password
+      p.note
+        | giving this can be insecure
+        |
+        a(href='#insecure') (more info)
+      p: input(type='password' name='password' required='')
+    label.hide-js
+      p Current URL
+      p.note.important please copy & paste the text in the address bar here
+      p: input#urlInput(type='text' name='url')
+      script document.getElementById("urlInput").value = "" + window.location
+    input.submit-btn(type='submit' value='Get pass →')
 
-  .content
-    form(method='POST' action="/createPass")
-      label
-        p Email
-        p.note Not used to send you messages
-        p: input(type='email' name='username' required='')
-      label
-        p Password
-        p.note
-          | giving this can be insecure
-          |
-          a(href='#insecure') (more info)
-        p: input(type='password' name='password' required='')
-      label.hide-js
-        p Current URL
-        p.note.important please copy & paste the text in the address bar here
-        p: input#urlInput(type='text' name='url')
-        script document.getElementById("urlInput").value = "" + window.location
-      input.submit-btn(type='submit' value='Get pass →')
-
-    #insecure.card.warning
-      p: b Warning!
-      p Your passwords are stored in my database!
-      p.
-        I cannot give any guarantees about the safety or availability of this service. Try at your own risk.
-      p.
-        The #[a(href='https://duwo.multiposs.nl') Multiposs] website does not make available any way to connect other programs (like this one) to it. Thus, the program needs to connect as if it were you, so it needs to know your password. This makes it necessary to store your password on our database in a less secure form.
+  #insecure.card.warning
+    p: b Warning!
+    p Your passwords are stored in my database!
+    p.
+      I cannot give any guarantees about the safety or availability of this service. Try at your own risk.
+    p.
+      The #[a(href='https://duwo.multiposs.nl') Multiposs] website does not make available any way to connect other programs (like this one) to it. Thus, the program needs to connect as if it were you, so it needs to know your password. This makes it necessary to store your password on our database in a less secure form.
