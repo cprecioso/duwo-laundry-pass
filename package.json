@@ -25,8 +25,9 @@
     "url": "git+https://github.com/cprecioso/laundry.git"
   },
   "scripts": {
-    "build": "rm -rf lib; tsc -p .",
-    "deploy": "now -E .env",
+    "deploy": "npm run prepublish && now -E .env",
+    "make-public": "now alias",
+    "prepublish": "rm -rf lib; tsc -p .",
     "start": "node lib/index.js",
     "watch": "rm -rf lib; tsc --watch -p ."
   },
@@ -49,5 +50,10 @@
     "@types/vinyl-fs": "^2.4.8",
     "now": "^8.5.4",
     "typescript": "^2.6.2"
+  },
+  "now": {
+    "name": "duwo-laundry",
+    "alias": "duwo-laundry",
+    "dotenv": ".env"
   }
 }
