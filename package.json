@@ -7,12 +7,14 @@
     "lib",
     "passImages",
     "public",
-    "views"
+    "views",
+    "tsconfig.json"
   ],
   "scripts": {
     "start": "node lib/index.js",
     "build": "rm -rf lib; tsc -p .",
-    "watch": "rm -rf lib; tsc --watch -p ."
+    "watch": "rm -rf lib; tsc --watch -p .",
+    "deploy": "now -E .env"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
@@ -31,6 +33,7 @@
     "@types/express": "^4.0.39",
     "@types/node": "^8.0.53",
     "@types/vinyl-fs": "^2.4.8",
+    "now": "^8.5.4",
     "typescript": "^2.6.2"
   }
 }
