@@ -42,8 +42,8 @@ app.post("/createPass", express.urlencoded({ extended: false }), async (req, res
     const pass = getInitialPass({ username, password }, address)
 
     const temporaryId = await randomString(16)
-    res.redirect(`/passes/${temporaryId}/laundry.pkpass`)
     temporaryPasses.set(temporaryId, {pass, url})
+    res.redirect(`/passes/${temporaryId}`)
 
     removePass(temporaryId)
 
@@ -51,6 +51,14 @@ app.post("/createPass", express.urlencoded({ extended: false }), async (req, res
     debugger
     res.status(500).send(err)
   }
+})
+
+app.get("/passes/:id", (req, res) => {
+  const passInfo = temporaryPasses.get(req.params.id)
+  if (!passInfo) return res.redirect("/")
+  res.render("pass", {
+    passUrl: new URL(`/passes/${req.params.id}/laundry.pkpass`, passInfo.url).href
+  })
 })
 
 app.get("/passes/:id/laundry.pkpass", async (req, res) => {

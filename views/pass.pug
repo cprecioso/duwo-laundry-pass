@@ -1,0 +1,35 @@
+extends layout
+
+block title
+  title Your pass is ready!
+
+block content
+  .cover
+    h1
+      | Your
+      br
+      | pass
+      br
+      | is
+      br
+      | ready
+
+  .content
+    .card
+      p: b Android
+      p
+        a(href=passUrl) Download pass →
+        br
+        a(href=`https://walletpass.io?u=${encodeURIComponent(passUrl)}` target="_blank") I don't have an app for passes →
+
+    .card
+      p: b iOS
+      p.
+        Apple asks me to pay $99 to be compatible with them. Therefore, it is not compatible with iOS.
+
+    .card
+      p: b Just download the file
+      p: a(href=passUrl) Here you are →
+
+    .card
+      p This page will be available for 10 minutes. If you need it after then, you can log in again in the main page.
