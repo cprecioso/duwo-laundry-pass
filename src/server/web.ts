@@ -15,6 +15,11 @@ const passServerMountPath = "/pass"
 
 app.use(passServerMountPath, passServer)
 
+async function removePass(temporaryId: string) {
+  await delay(10 * 60 * 1000)
+  temporaryPasses.delete(temporaryId)
+}
+
 app.get("/", (req, res) => {
   res.set("Content-Type", "text/html")
   res.send(publicHtml)
@@ -36,8 +41,7 @@ app.post("/", express.urlencoded({ extended: false }), async (req, res) => {
     temporaryPasses.set(temporaryId, pass)
     res.redirect(`/passes/${temporaryId}/laundry.pkpass`)
 
-    await delay(10*60*1000)
-    temporaryPasses.delete(temporaryId)
+    removePass(temporaryId)
 
   } catch (err) {
     debugger
