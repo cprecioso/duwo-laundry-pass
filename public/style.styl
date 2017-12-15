@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro")
+
+maxWidth = 400px
+
+body
+  font-family sans-serif
+  margin 0 auto
+  padding 0
+  overflow-x hidden
+
+  &.js .hide-js
+    display none
+
+a
+  color inherit
+
+  &:focus
+    outline none
+    background black
+    color white
+    text-decoration none
+
+.cover
+  width 100vw
+  min-height 100vh
+
+  background-image linear-gradient(to bottom, rgba(255, 255, 255, 0), white), url("bg.jpg")
+  background-size cover
+  background-repeat no-repeat
+  background-position bottom center
+
+  display flex
+  flex-flow column
+  justify-content flex-end
+  align-items flex-start
+
+  h1
+    margin 16px
+    padding .3em
+    border 5px solid black
+
+    flex 0 0 auto
+    width fit-content
+
+    font-size 50pt
+    letter-spacing 15px
+    word-break break-all
+
+    font-weight 700
+    text-transform uppercase
+    text-shadow 1px 2px 4px rgba(0, 0, 0, .1)
+
+.content
+  max-width maxWidth
+  margin 0 auto
+
+form
+  margin 1em 10px 0.5em
+  font-size 60px
+
+  label
+    display block
+    margin-bottom 1em
+
+  p
+    text-transform uppercase
+    font-weight bold
+    margin 0
+    line-height 1em
+
+  .note
+    position relative
+    top -.5em
+    font-size 10px
+    text-transform lowercase
+    text-align right
+    font-weight normal
+
+  input
+    width 100%
+    font-size 0.5em
+    height 1.3em
+
+    position relative
+    top -.5em
+
+    border 3px solid black
+    background none
+
+    &:active, &:focus
+      background black
+      color white
+      outline none
+
+  .submit-btn
+    font-size @font-size
+    display block
+    border none
+    cursor pointer
+    text-transform uppercase
+    font-weight bold
+    text-align left
+    text-decoration underline
+
+
+.card
+  border 3px solid black
+  margin 1.5em 10px
+  padding 1em
+
+  &:target
+    background black
+    color white

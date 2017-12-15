@@ -6,14 +6,16 @@ import { URL } from "url"
 import passServer from "./pass"
 import * as isEmail from "is-email"
 import { randomString, delay } from "../util"
-
-const publicHtml = readFileSync(resolve(__dirname, "../../web/index.html"))
+import { middleware as stylus } from "stylus"
 
 const app = express()
 
 const passServerMountPath = "/pass"
 
 app.use(passServerMountPath, passServer)
+
+app.set("views", resolve(__dirname, "../../views"))
+app.set("view engine", "pug")
 
 const temporaryPasses = new Map<string, {
   pass: Promise<Buffer>,
@@ -26,11 +28,10 @@ async function removePass(temporaryId: string) {
 }
 
 app.get("/", (req, res) => {
-  res.set("Content-Type", "text/html")
-  res.send(publicHtml)
+  res.render("index")
 })
 
-app.post("/", express.urlencoded({ extended: false }), async (req, res) => {
+app.post("/createPass", express.urlencoded({ extended: false }), async (req, res) => {
   try {
 
     const { username, password, url } = req.body as { [key: string]: string }
@@ -62,5 +63,8 @@ app.get("/passes/:id/laundry.pkpass", async (req, res) => {
     res.status(500).send(err)
   }
 })
+
+app.use(stylus(resolve(__dirname, "../../public")));
+app.use("/", express.static(resolve(__dirname, "../../public")))
 
 export default app
