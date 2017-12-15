@@ -41,7 +41,10 @@ app.post("/createPass", express.urlencoded({ extended: false }), async (req, res
     const { username, password, url } = req.body as { [key: string]: string }
     const address = new URL(passServerMountPath, url).href
 
-    if (!isEmail(username) || !password || !address) return res.redirect("/")
+    if (!isEmail(username) || !password || !address) throw {
+      httpCode: 403,
+      message: "Invalid data"
+    }
 
     const pass = getInitialPass({ username, password }, address)
 
@@ -53,26 +56,40 @@ app.post("/createPass", express.urlencoded({ extended: false }), async (req, res
 
   } catch (err) {
     debugger
-    res.status(500).send(err)
+    const error = err.message || err
+    res.status(error.httpCode || 500).render("error", { error })
   }
 })
 
 app.get("/passes/:id", (req, res) => {
-  const passInfo = temporaryPasses.get(req.params.id)
-  if (!passInfo) return res.redirect("/")
-  res.render("pass", {
-    passUrl: new URL(`/passes/${req.params.id}/laundry.pkpass`, passInfo.url).href
-  })
+  try {
+    const passInfo = temporaryPasses.get(req.params.id)
+    if (!passInfo) throw {
+      httpCode: 403,
+      message: "This pass doesn't exist or has expired"
+    }
+    res.render("pass", {
+      passUrl: new URL(`/passes/${req.params.id}/laundry.pkpass`, passInfo.url).href
+    })
+  } catch (err) {
+    debugger
+    const error = err.message || err
+    res.status(error.httpCode || 500).render("error", {error})
+  }
 })
 
 app.get("/passes/:id/laundry.pkpass", async (req, res) => {
   try {
     const {pass} = temporaryPasses.get(req.params.id)
-    if (!pass) return res.redirect("/")
+    if (!pass) throw {
+      httpCode: 403,
+      message: "This pass doesn't exist or has expired"
+    }
     res.type("application/vnd.apple.pkpass").send(await pass)
   } catch (err) {
     debugger
-    res.status(500).send(err)
+    const error = err.message || err
+    res.status(error.httpCode || 500).render("error", { error })
   }
 })
 
