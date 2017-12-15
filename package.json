@@ -1,6 +1,6 @@
 {
   "name": "duwo-laundry-pass",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "Server to create Passbook passes for DUWO's laundromats",
   "homepage": "https://github.com/cprecioso/laundry#readme",
