@@ -31,6 +31,10 @@ app.get("/", (req, res) => {
   res.render("index")
 })
 
+app.get("/opensource", (req, res) => {
+  res.render("opensource")
+})
+
 app.post("/createPass", express.urlencoded({ extended: false }), async (req, res) => {
   try {
 
