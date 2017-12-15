@@ -1,5 +1,5 @@
 import db, { getJSON } from "./db"
-import { hash, randomString } from "../util"
+import { hash, randomString, encrypt, decrypt } from "../util"
 
 export interface UserId extends String {}
 export interface InputUserData {
@@ -16,20 +16,38 @@ export async function createUser(data: InputUserData & Partial<UserData>): Promi
   const userId = hash(data.username)
   const existingData: UserData | null = await getUser(userId)
   const authenticationToken = await randomString(20)
-  const setData: UserData = {
+
+  const returnData: UserData = {
     userId,
     authenticationToken,
     ...existingData,
     ...data
   }
+
+  const setData: UserData = {
+    ...returnData,
+    password: encrypt(returnData.password)
+  }
+
   const ref = db.ref("users/" + userId)
   await ref.set(setData)
-  return setData
+  return returnData
 }
 
 export async function getUser(userId: UserId): Promise<UserData> {
   const ref = db.ref("users/" + userId)
-  return getJSON<UserData>(ref)
+  const data = await getJSON<UserData>(ref)
+
+  let password: string = undefined
+  try {
+    password = decrypt(data.password)
+  } catch (_) { }
+
+  const returnData: UserData = {
+    ...data,
+    password
+  }
+  return returnData
 }
 
 export async function deleteUser(userId: UserId): Promise<void> {
