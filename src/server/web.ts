@@ -15,6 +15,11 @@ const passServerMountPath = "/pass"
 
 app.use(passServerMountPath, passServer)
 
+const temporaryPasses = new Map<string, {
+  pass: Promise<Buffer>,
+  url: string
+}>()
+
 async function removePass(temporaryId: string) {
   await delay(10 * 60 * 1000)
   temporaryPasses.delete(temporaryId)
@@ -24,8 +29,6 @@ app.get("/", (req, res) => {
   res.set("Content-Type", "text/html")
   res.send(publicHtml)
 })
-
-const temporaryPasses = new Map<string, Promise<Buffer>>()
 
 app.post("/", express.urlencoded({ extended: false }), async (req, res) => {
   try {
@@ -38,8 +41,8 @@ app.post("/", express.urlencoded({ extended: false }), async (req, res) => {
     const pass = getInitialPass({ username, password }, address)
 
     const temporaryId = await randomString(16)
-    temporaryPasses.set(temporaryId, pass)
     res.redirect(`/passes/${temporaryId}/laundry.pkpass`)
+    temporaryPasses.set(temporaryId, {pass, url})
 
     removePass(temporaryId)
 
@@ -51,7 +54,7 @@ app.post("/", express.urlencoded({ extended: false }), async (req, res) => {
 
 app.get("/passes/:id/laundry.pkpass", async (req, res) => {
   try {
-    const pass = temporaryPasses.get(req.params.id)
+    const {pass} = temporaryPasses.get(req.params.id)
     if (!pass) return res.redirect("/")
     res.type("application/vnd.apple.pkpass").send(await pass)
   } catch (err) {
