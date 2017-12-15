@@ -1,6 +1,12 @@
 {
   "private": true,
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "passImages",
+    "public",
+    "views"
+  ],
   "scripts": {
     "start": "node lib/index.js",
     "build": "rm -rf lib; tsc -p .",
