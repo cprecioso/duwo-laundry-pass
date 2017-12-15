@@ -1,0 +1,14 @@
+extends layout
+
+block title
+  title Error
+
+block cover
+  pre.card.error= error
+
+  .card
+    p: b Go back
+    p
+      a(href="javascript:history.back()") To previous page →
+      br
+      a(href="/") To main page →

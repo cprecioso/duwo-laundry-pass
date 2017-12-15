@@ -79,4 +79,8 @@ app.get("/passes/:id/laundry.pkpass", async (req, res) => {
 app.use(stylus(resolve(__dirname, "../../public")));
 app.use("/", express.static(resolve(__dirname, "../../public")))
 
+app.use((req, res) => {
+  res.status(404).render("error", { error: "Can't find that page" })
+})
+
 export default app
